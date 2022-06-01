@@ -11,5 +11,5 @@ export async function setupPlugin() {
 
 // Capture event called heartbeat
 async function captureHeartbeat() {
-    await posthog.capture('heartbeat')
+    await posthog.capture('heartbeat', {timestamp:Date.now()})
 }
