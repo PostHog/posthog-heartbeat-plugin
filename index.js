@@ -7,5 +7,5 @@ export async function runEveryMinute() {
 
 // Capture event called heartbeat
 async function captureHeartbeat() {
-    await posthog.capture('heartbeat', {timestamp_utc:Date.now()})
+    await posthog.capture('heartbeat', {timestamp_iso:new Date().toISOString()})
 }
