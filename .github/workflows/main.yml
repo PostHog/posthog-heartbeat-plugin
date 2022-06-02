@@ -10,6 +10,7 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
+        name: Code quality checks
         steps:
             - name: Check out code
               uses: actions/checkout@v2
@@ -19,5 +20,7 @@ jobs:
                   node-version: '14'
             - name: Install dependencies
               run: npm install
-            - name: Run tests
-              run: npm test
+            - name: Lint
+              run: npm run lint
+            - name: Check formatting
+              run: npm run format:check
