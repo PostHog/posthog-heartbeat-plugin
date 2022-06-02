@@ -4,6 +4,9 @@
 import fetch from 'node-fetch'
 
 export async function runEveryMinute({ config }) {
+    if (!config.events) {
+        config.events = 'heartbeat'
+    }
     const timestamp = new Date().toISOString()
     const eventsArray = config.events.split(' + ')
     const capturePromises = []
@@ -11,6 +14,12 @@ export async function runEveryMinute({ config }) {
         capturePromises.push(captureHeartbeat(timestamp))
     }
     if (eventsArray.includes('heartbeat_api')) {
+        if (!config.host) {
+            throw new Error('PostHog host needs to be configured for heartbeat_api to work!')
+        }
+        if (!config.project_api_key) {
+            throw new Error('PostHog project API key needs to be configured for heartbeat_api to work!')
+        }
         capturePromises.push(captureHeartbeatApi(timestamp, config.host, config.project_api_key))
     }
     await Promise.all(capturePromises)
