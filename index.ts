@@ -14,6 +14,7 @@ export async function runEveryMinute({ config }) {
         capturePromises.push(captureHeartbeatApi(timestamp, config.host, config.project_api_key))
     }
     await Promise.all(capturePromises)
+    console.info(`Sent ${config.events} at ${timestamp}`)
 }
 
 /** Capture `heartbeat` event, directly into the queue */
