@@ -36,7 +36,7 @@ async function captureHeartbeat(timestamp: string) {
 
 /** Capture `heartbeat` event, directly into the queue, but with a random distinct ID so that it goes via buffer */
 async function captureHeartbeatBuffer(timestamp: string) {
-    const randomDistinctId = `PostHog Heartbeat Plugin / Buffer ${Math.random().toString().slice(2)}`
+    const randomDistinctId = `PostHog Heartbeat Plugin / Buffer ${Date.now()}`
     await posthog.capture('heartbeat_buffer', { $timestamp: timestamp, distinct_id: randomDistinctId })
 }
 
