@@ -13,6 +13,9 @@ export async function runEveryMinute({ config }) {
     if (eventsArray.includes('heartbeat')) {
         capturePromises.push(captureHeartbeat(timestamp))
     }
+    if (eventsArray.includes('heartbeat_buffer')) {
+        capturePromises.push(captureHeartbeatBuffer(timestamp))
+    }
     if (eventsArray.includes('heartbeat_api')) {
         if (!config.host) {
             throw new Error('PostHog host needs to be configured for heartbeat_api to work!')
@@ -29,6 +32,12 @@ export async function runEveryMinute({ config }) {
 /** Capture `heartbeat` event, directly into the queue */
 async function captureHeartbeat(timestamp: string) {
     await posthog.capture('heartbeat', { $timestamp: timestamp })
+}
+
+/** Capture `heartbeat` event, directly into the queue, but with a random distinct ID so that it goes via buffer */
+async function captureHeartbeatBuffer(timestamp: string) {
+    const randomDistinctId = `PostHog Heartbeat Plugin / Buffer ${Date.now()}`
+    await posthog.capture('heartbeat_buffer', { $timestamp: timestamp, distinct_id: randomDistinctId })
 }
 
 /** Capture `heartbeat_api` event, via the API */
