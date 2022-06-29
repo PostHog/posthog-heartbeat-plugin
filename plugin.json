@@ -10,8 +10,8 @@
             "key": "events",
             "name": "Events to be emitted",
             "type": "choice",
-            "hint": "The basic `heartbeat` event emitted by this plugin goes straight into the event ingestion queue. The `heartbeat_api` event goes via the event capture endpoint, which helps monitor the API too.",
-            "choices": ["heartbeat", "heartbeat_api", "heartbeat + heartbeat_buffer + heartbeat_api"],
+            "hint": "The basic `heartbeat` event emitted by this plugin goes straight into the event ingestion queue. The `heartbeat_buffer` is emitted the same way as `heartbeat`, but has a different distinct ID each time to ensure it goes via the event buffer. The `heartbeat_api` event goes via the event capture endpoint, which helps monitor the API too.",
+            "choices": ["heartbeat", "heartbeat + heartbeat_buffer + heartbeat_api"],
             "default": "heartbeat",
             "required": true
         },
